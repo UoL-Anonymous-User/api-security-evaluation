@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package app;
+
+service AppService {
+  rpc Register(RegisterRequest) returns (User);
+  rpc Login(LoginRequest) returns (User);
+  rpc GetUsers(Empty) returns (UsersResponse);
+  rpc GetUser(GetUserRequest) returns (User);
+  rpc GetOrders(Empty) returns (OrdersResponse);
+  rpc GetOrder(GetOrderRequest) returns (Order);
+  rpc CreateOrder(CreateOrderRequest) returns (Order);
+  rpc DeleteOrder(DeleteOrderRequest) returns (Order);
+  rpc DeleteUser(DeleteUserRequest) returns (User);
+}
+
+message Empty {}
+
+message User {
+  int32 id = 1;
+  string email = 2;
+  string role = 3;
+}
+
+message Order {
+  int32 id = 1;
+  int32 user_id = 2;
+  string item = 3;
+  double amount = 4;
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message GetUserRequest {
+  int32 id = 1;
+}
+
+message GetOrderRequest {
+  int32 id = 1;
+}
+
+message CreateOrderRequest {
+  int32 user_id = 1;
+  string item = 2;
+  double amount = 3;
+}
+
+message DeleteOrderRequest {
+  int32 id = 1;
+}
+
+message DeleteUserRequest {
+  int32 id = 1;
+}
+
+message UsersResponse {
+  repeated User users = 1;
+}
+
+message OrdersResponse {
+  repeated Order orders = 1;
+}

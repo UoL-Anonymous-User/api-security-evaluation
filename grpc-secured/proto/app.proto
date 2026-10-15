@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package app;
+
+service AppService {
+
+  rpc Register(RegisterRequest)
+      returns (User);
+
+  rpc Login(LoginRequest)
+      returns (AuthResponse);
+
+  rpc GetUsers(GetUsersRequest)
+      returns (UsersResponse);
+
+  rpc GetCurrentUser(Empty)
+      returns (User);
+
+  rpc GetOrders(GetOrdersRequest)
+      returns (OrdersResponse);
+
+  rpc GetOrder(GetOrderRequest)
+      returns (Order);
+
+  rpc CreateOrder(CreateOrderRequest)
+      returns (Order);
+
+  rpc DeleteOrder(DeleteOrderRequest)
+      returns (Order);
+
+  rpc DeleteUser(DeleteUserRequest)
+      returns (User);
+}
+
+message Empty {}
+
+message User {
+  int32 id = 1;
+  string email = 2;
+  string role = 3;
+}
+
+message Order {
+  int32 id = 1;
+  int32 user_id = 2;
+  string item = 3;
+  double amount = 4;
+}
+
+message AuthResponse {
+  string token = 1;
+  User user = 2;
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// Added for Pagination
+message GetUsersRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+// Added for Pagination
+message GetOrdersRequest {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message GetOrderRequest {
+  int32 id = 1;
+}
+
+message CreateOrderRequest {
+  string item = 1;
+  double amount = 2;
+}
+
+message DeleteOrderRequest {
+  int32 id = 1;
+}
+
+message DeleteUserRequest {
+  int32 id = 1;
+}
+
+message UsersResponse {
+  repeated User users = 1;
+}
+
+message OrdersResponse {
+  repeated Order orders = 1;
+}
